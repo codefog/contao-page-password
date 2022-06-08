@@ -15,9 +15,13 @@ class PageStatusIconListener
     {
     }
 
-    public function __invoke(\stdClass $page, string $image): string
+    public function __invoke($page, string $image): string
     {
-        if (($pageModel = PageModel::findByPk($page->id)) !== null && $this->authenticator->isPageProtected($pageModel)) {
+        if (!($page instanceof PageModel)) {
+            $page = PageModel::findByPk($page->id);
+        }
+
+        if ($page !== null && $this->authenticator->isPageProtected($page)) {
             $sub = 4;
 
             // Get the sub from the existing icon, if any
@@ -30,7 +34,7 @@ class PageStatusIconListener
                 }
             }
 
-            $image = sprintf('%s_%s.svg', $pageModel->type, $sub);
+            $image = sprintf('%s_%s.svg', $page->type, $sub);
         }
 
         return $image;
