@@ -3,11 +3,11 @@
 namespace Codefog\PagePasswordBundle;
 
 use Contao\PageModel;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Authenticator
 {
-    public function __construct(private SessionInterface $session)
+    public function __construct(private RequestStack $requestStack)
     {
     }
 
@@ -24,11 +24,13 @@ class Authenticator
             return false;
         }
 
-        if (!$this->session->isStarted()) {
+        $session = $this->requestStack->getSession();
+
+        if (!$session->isStarted()) {
             return false;
         }
 
-        return $this->session->get($this->getSessionKey($pageModel)) === $pageModel->password;
+        return $session->get($this->getSessionKey($pageModel)) === $pageModel->password;
     }
 
     public function authenticate(PageModel $pageModel, string $password): bool
@@ -39,7 +41,7 @@ class Authenticator
             return false;
         }
 
-        $this->session->set($this->getSessionKey($pageModel), $password);
+        $this->requestStack->getSession()->set($this->getSessionKey($pageModel), $password);
 
         return true;
     }
