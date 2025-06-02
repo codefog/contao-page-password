@@ -7,18 +7,16 @@ use Codefog\PagePasswordBundle\EventSubscriber\AuthenticateSubscriber;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\Csrf\ContaoCsrfTokenManager;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Exception\PageNotFoundException;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\ModuleModel;
 use Contao\PageModel;
-use Contao\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @FrontendModule("page_password", category="application")
- */
+#[AsFrontendModule('page_password', category: 'application')]
 class PagePasswordController extends AbstractFrontendModuleController
 {
     public function __construct(
@@ -29,7 +27,7 @@ class PagePasswordController extends AbstractFrontendModuleController
     {
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         if (!$request->attributes->has(AuthenticateSubscriber::REQUEST_ATTRIBUTE)
             || ($sourcePageModel = PageModel::findPublishedById($request->attributes->getInt(AuthenticateSubscriber::REQUEST_ATTRIBUTE))) === null

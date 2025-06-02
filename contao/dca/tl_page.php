@@ -1,9 +1,12 @@
 <?php
 
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Doctrine\DBAL\Types\Types;
+
 // Palettes
-\Contao\CoreBundle\DataContainer\PaletteManipulator::create()
-    ->addLegend('password_legend', 'routing_legend', \Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_AFTER)
-    ->addField('passwordProtected', 'password_legend', \Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+PaletteManipulator::create()
+    ->addLegend('password_legend', 'routing_legend', PaletteManipulator::POSITION_AFTER)
+    ->addField('passwordProtected', 'password_legend', PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('regular', 'tl_page')
     ->applyToPalette('forward', 'tl_page')
     ->applyToPalette('redirect', 'tl_page')
@@ -25,12 +28,12 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['password'] = [
     'exclude' => true,
     'inputType' => 'text',
     'eval' => ['mandatory' => true, 'maxlength' => 64, 'decodeEntities' => true, 'tl_class' => 'w50'],
-    'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
+    'sql' => ['type' => Types::STRING, 'length' => 64, 'default' => ''],
 ];
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['passwordPage'] = [
     'exclude' => true,
     'inputType' => 'pageTree',
     'eval' => ['mandatory' => true, 'fieldType' => 'radio', 'tl_class' => 'clr'],
-    'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
+    'sql' => ['type' => Types::INTEGER, 'unsigned' => true, 'default' => 0],
 ];
