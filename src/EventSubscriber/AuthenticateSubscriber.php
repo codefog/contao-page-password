@@ -7,6 +7,7 @@ use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\FrontendIndex;
 use Contao\PageModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -48,7 +49,9 @@ class AuthenticateSubscriber implements EventSubscriberInterface
         }
 
         $request->attributes->set(self::REQUEST_ATTRIBUTE, $pageModel->id);
-        $event->setResponse((new FrontendIndex())->renderPage($passwordPageModel));
+        $response = (new FrontendIndex())->renderPage($passwordPageModel);
+        $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+        $event->setResponse($response);
     }
 
     public static function getSubscribedEvents()
