@@ -2,12 +2,10 @@
 
 namespace Codefog\PagePasswordBundle\EventListener;
 
-use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\PageModel;
 
-/**
- * @Hook(value="loadPageDetails")
- */
+#[AsHook('loadPageDetails')]
 class LoadPageDetailsListener
 {
     public function __invoke(array $parentPages, PageModel $currentPage): void

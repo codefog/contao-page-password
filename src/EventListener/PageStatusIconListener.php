@@ -3,12 +3,10 @@
 namespace Codefog\PagePasswordBundle\EventListener;
 
 use Codefog\PagePasswordBundle\Authenticator;
-use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\PageModel;
 
-/**
- * @Hook(value="getPageStatusIcon")
- */
+#[AsHook('getPageStatusIcon')]
 class PageStatusIconListener
 {
     public function __construct(private Authenticator $authenticator)
