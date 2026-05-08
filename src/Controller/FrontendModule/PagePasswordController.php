@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[AsFrontendModule('page_password', category: 'application')]
+#[AsFrontendModule('page_password', category: 'application', template: 'mod_page_password')]
 class PagePasswordController extends AbstractFrontendModuleController
 {
     public function __construct(
