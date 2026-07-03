@@ -44,7 +44,7 @@ class AuthenticateSubscriber implements EventSubscriberInterface
         }
 
         // The password page does not exist
-        if (!$pageModel->passwordPage || ($passwordPageModel = PageModel::findPublishedById($pageModel->passwordPage)) === null) {
+        if (!$pageModel->passwordPage || ($passwordPageModel = PageModel::findWithDetails($pageModel->passwordPage)) === null) {
             throw new AccessDeniedException();
         }
 
