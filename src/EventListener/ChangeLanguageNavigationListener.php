@@ -28,7 +28,7 @@ class ChangeLanguageNavigationListener
             return;
         }
 
-        if (!$sourcePage = PageModel::findById($request->attributes->get(AuthenticateSubscriber::REQUEST_ATTRIBUTE))) {
+        if (!$sourcePage = PageModel::findPublishedById($request->attributes->get(AuthenticateSubscriber::REQUEST_ATTRIBUTE))) {
             return;
         }
 
